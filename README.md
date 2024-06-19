@@ -22,8 +22,58 @@
 ### Задание 1
 
 1. Используя директорию [help](./help) внутри этого домашнего задания, запустите связку prometheus-grafana.
+
+Внес правки в код, и запустил контейнеры, что бы у всех были настроены порты:
+
+![alt text](image.png)
+
+
 1. Зайдите в веб-интерфейс grafana, используя авторизационные данные, указанные в манифесте docker-compose.
+
+![alt text](image-1.png)
+
 1. Подключите поднятый вами prometheus, как источник данных.
+
+Проверил конфиг прометеуса:
+
+![alt text](image-2.png)
+
+Настроенные цели:
+
+![alt text](image-3.png)
+
+добавил еще в конфиг прометеуса:
+
+```
+      - targets: ['prometheus:9090']
+```
+
+```
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'nodeexporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['nodeexporter:9100']
+      - targets: ['prometheus:9090']
+```
+
+
+Нашел id дашборда тут:  
+https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+
+
+
+
+Импортирую шаблон:
+
+![alt text](image-4.png)
+
+
+
 1. Решение домашнего задания — скриншот веб-интерфейса grafana со списком подключенных Datasource.
 
 ## Задание 2
